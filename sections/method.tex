@@ -1,0 +1,67 @@
+\section{Trajectory Provenance Graphs}
+\label{sec:method}
+
+\subsection{Setting and Notation}
+\label{sec:method-setting}
+
+We consider an LLM agent executing a task specified by an instruction $u$ over an environment $\mathcal{E}$ with tool catalog $\mathcal{T}$. A trajectory $\tau = (s_1, \dots, s_K)$ is a sequence of $K$ steps, where step $s_k$ records the model turn, the tool call $(t_k, a_k, r_k)$ consisting of a tool $t_k \in \mathcal{T}$, arguments $a_k$, and result $r_k$, and the observation channel through which $r_k$ entered the context. A trajectory is \emph{benign} when the sequence of calls serves $u$ within the privileges the task grants, and \emph{anomalous} otherwise. The auditing task is to assign each trajectory a score $f(G) \in [0,1]$ indicating anomaly, given its compiled graph $G$, and to localize the responsible steps with node-level scores.
+
+We compile each trajectory into a heterogeneous attributed graph $G = (V, E, \phi, \psi)$ with node-type function $\phi: V \to \mathcal{N}$ and edge-type function $\psi: E \to \mathcal{R}$. Compilation is a deterministic function of the trace: no step of construction depends on the label, so benign and anomalous trajectories pass through the identical compiler. This discipline is what makes the benchmark auditable in turn---a compiler that looked at labels would smuggle the answer into the features.
+
+\begin{table}[tb]
+  \centering
+  \caption{Node and edge types of the trajectory provenance graph.}
+  \label{tab:schema}
+  \begin{small}
+  \begin{tabular}{llp{5.2cm}}
+    \toprule
+    \textbf{Type} & \textbf{Kind} & \textbf{Semantics} \\
+    \midrule
+    \texttt{task} & node & The user instruction; root of the graph. \\
+    \texttt{step} & node & One model turn (reasoning or decision point). \\
+    \texttt{call} & node & One tool invocation instance. \\
+    \texttt{tool} & node & A catalog identity (e.g., \texttt{gmail.send}). \\
+    \texttt{entity} & node & An argument datum (file, account, URL, amount). \\
+    \texttt{result} & node & A tool observation returned to the agent. \\
+    \texttt{sink} & node & A sensitive-operation class (send, pay, delete, exfiltrate). \\
+    \midrule
+    \texttt{invokes} & edge & $step \rightarrow call$: the model emits this call. \\
+    \texttt{uses} & edge & $call \rightarrow tool$: static tool identity. \\
+    \texttt{has\_arg} & edge & $call \rightarrow entity$: argument binding. \\
+    \texttt{reads} & edge & $step \rightarrow result$: observation consumed. \\
+    \texttt{yields} & edge & $result \rightarrow call$: result feeds the next call. \\
+    \texttt{flows} & edge & $entity \rightarrow call$: dataflow of a datum into a call. \\
+    \texttt{then} & edge & $call \rightarrow call$: temporal order. \\
+    \texttt{targets} & edge & $call \rightarrow sink$: effect class of the call. \\
+    \bottomrule
+  \end{tabular}
+  \end{small}
+\end{table}
+
+\subsection{Graph Schema}
+\label{sec:method-schema}
+
+\Cref{tab:schema} defines the schema. The design follows one principle: every edge must encode a relation that either an injection hijack or an over-privileged action must ultimately violate. \texttt{flows} edges carry the dataflow of an argument datum into a later call, so the signature of an injection hijack---an untrusted \texttt{result} whose content steers a chain of calls ending at a sensitive \texttt{sink}---appears as a typed path $result \rightarrow step \rightarrow call \rightsquigarrow sink$. Over-privilege appears as a \texttt{call} whose \texttt{targets} edge points at a sink class that the task's grant does not cover, or whose authorizing subgraph (an upstream read or user confirmation) is absent. Malicious use, by contrast, may preserve entirely regular structure; we return to this asymmetry when defining the anomaly families, because it is what makes the benchmark discriminative rather than trivially solvable.
+
+Node attributes are typed per node class: \texttt{call} nodes carry the tool identity, argument schema, and replay timestamp; \texttt{entity} nodes carry a canonicalized value class (identifier, path, URL, currency) rather than the raw value, which bounds the feature space; \texttt{step} nodes carry text embeddings only in the structure-plus-text disclosure setting defined below. Edge attributes are minimal (temporal gap, argument slot index). The full graph for a typical trajectory contains [TBD---mean node/edge counts] nodes and [TBD] edges, so graph-level detectors face a small-graph regime with tens of nodes, not thousands.
+
+\subsection{Disclosure Control}
+\label{sec:method-disclosure}
+
+Each compiled graph is released at two disclosure levels. In the \emph{structure-only} level ($D_0$), all text is stripped: \texttt{step} nodes carry no content features, and \texttt{entity} nodes carry only value classes, mirroring what a defender can retain under strict logging policy. In the \emph{structure-plus-text} level ($D_1$), \texttt{step} nodes additionally carry frozen sentence embeddings of the model turn, and \texttt{result} nodes carry embeddings of the observation. The ablation between $D_0$ and $D_1$ isolates the benchmark's central scientific question---how much auditing signal lives in structure alone---and simultaneously serves a deployment purpose, since many operators cannot or will not log raw prompts. All comparisons across detector families are run at both levels under identical splits.
+
+\subsection{Anomaly Families}
+\label{sec:method-families}
+
+The benchmark couples three anomaly families under one schema, chosen so that their signatures stress different parts of the graph.
+
+\emph{A1: injection-hijacked trajectories.} Following the step-labeled construction of AgentDrift, an A1 trajectory contains a hijack frontier: an observation in which an indirect injection payload is embedded, after which one or more calls service the attacker's goal rather than the user's task~\cite{pinjari2026agentdrift}. Benign counterparts are the unattacked replays of the same tasks~\cite{debenedetti2024agentdojo}. A1 anomalies are structurally visible in $D_0$ \emph{if and only if} the hijack altered the call pattern---which is exactly what our results measure, since a hijack that leaves the call sequence untouched is invisible to structure by construction.
+
+\emph{A2: malicious-use trajectories.} Drawn from AgentHarm's harmful task suite, A2 trajectories execute a request that is itself harmful, using the same benign-looking tool choreography as normal work~\cite{andriushchenko2024agentharm}. Because the execution pattern is regular, A2 is the family where structure alone should fail and text should be necessary; including it prevents the benchmark from rewarding detectors that merely flag any unusual call sequence, and it mirrors the mixed reality of deployment where structural and semantic violations co-occur.
+
+\emph{A3: over-privileged tool use.} Constructed by our data engine, A3 trajectories contain calls that exceed the privilege the task grants---sending data the task only permitted to read, writing where only reading was authorized, or invoking a tool outside the task's declared scope---operationalizing the over-privilege taxonomy of~\cite{yang2026when}. Crucially, A3 contains no injected payload: the trajectory is structurally plausible, the instruction is benign, and the violation lives in the relation between the task's grant and the call's effect, encoded in the \texttt{targets} and missing-authorization structure of the graph.
+
+\subsection{Detection Formulation}
+\label{sec:method-detection}
+
+Detectors receive a corpus $\{G_i\}$ at a fixed disclosure level and must return $f(G_i)$ for held-out graphs; family-aware supervised methods may additionally use training-set labels, but the LOAO protocol restricts which families are visible at training time (\cref{sec:bench}). Localization is optional but scored: detectors may emit node-level scores, which we evaluate against the step-level hijack labels of A1~\cite{pinjari2026agentdrift}. This formulation deliberately mirrors graph-level GAD practice~\cite{qiao2024deep} while adding the adversarial evaluation axes that agent safety demands, and it admits every detector family we evaluate, from hand-crafted rules to graph foundation models~\cite{qiao2025anomalygfm,zheng2026owleye}.

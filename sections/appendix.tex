@@ -1,0 +1,15 @@
+\appendix
+
+\section{Reproducibility Details}
+\label{app:repro}
+
+\paragraph{Replay harness.} Trajectories are regenerated with vLLM serving Qwen2.5-7B-Instruct (bf16) and Qwen2.5-32B-Instruct-AWQ (4-bit) on a single 24\,GB GPU; sampling uses temperature [TBD], top-$p$ [TBD], and a per-trajectory seed derived from the task identifier, so every published graph is regenerable bit-for-bit from the released scripts. AgentDojo suites are replayed with their original task definitions and attack configurations~\cite{debenedetti2024agentdojo}; A1 step labels are aligned to our \texttt{step} nodes from the AgentDrift release~\cite{pinjari2026agentdrift}; A2 trajectories replay AgentHarm's harmful tasks with their benign counterparts~\cite{andriushchenko2024agentharm}; A3 generation scripts, grant definitions, and the over-privilege parameter grid derived from~\cite{yang2026when} are released with the compiler.
+
+\paragraph{Graph compiler.} Compilation is a deterministic three-pass pass over the trace JSONL: (1) node emission with canonicalized entity classes (identifier, path, URL, currency, free-text); (2) edge emission from the replay event log (invocation order, argument bindings, observation consumption); (3) attribute assembly under the requested disclosure level $D_0$ or $D_1$. Entity canonicalization rules and the full attribute dictionary are listed in [TBD---appendix table or repository pointer]. Mean graph statistics: [TBD] nodes, [TBD] edges, [TBD] s per trajectory on one CPU core.
+
+\paragraph{Hyperparameters.} Per-detector search spaces, budgets, and selected configurations are reported in [TBD---hyperparameter table], including the reference detector's training schedule, loss, and hardware footprint; five-seed runs use seeds \{0--4\} with shared data folds.
+
+\section{Licenses and Attribution}
+\label{app:license}
+
+The benchmark builds on AgentDojo (original license), AgentDrift, and AgentHarm releases; we redistribute only compiled graphs and regenerable scripts, not upstream assets, and each artifact carries its upstream license pointer. The over-privilege family is synthetic. Released code is under [TBD---license]; data under [TBD---license].

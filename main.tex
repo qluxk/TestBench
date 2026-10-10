@@ -1,0 +1,42 @@
+\documentclass[sigconf,review,anonymous]{acmart}
+\usepackage{booktabs}
+\usepackage{placeins}
+\usepackage[capitalise,noabbrev]{cleveref}
+\graphicspath{{figures/}}
+
+\usepackage{hyperref} % auto-fixed: required by \url
+
+\title[TraceGraph-Bench: Graph-Level Anomaly Detection over Agent Trajectories]{TraceGraph-Bench: Auditing LLM Agents with Graph-Level Anomaly Detection over Tool-Call Trajectories}
+\author{Anonymous Author(s)}
+
+\begin{document}
+
+\input{sections/abstract}
+
+\maketitle
+
+\input{sections/introduction}
+
+\FloatBarrier
+\input{sections/related-work}
+\FloatBarrier
+\input{sections/related-work-gad}
+\FloatBarrier
+\input{sections/related-work-prov}
+\FloatBarrier
+\input{sections/method}
+\FloatBarrier
+\input{sections/method-bench}
+\FloatBarrier
+\input{sections/experiments-setup}
+\FloatBarrier
+\input{sections/experiments-results}
+\FloatBarrier
+\input{sections/conclusion}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\input{sections/appendix}
+
+\end{document}

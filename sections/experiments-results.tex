@@ -1,0 +1,92 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Main Detection Results}
+\label{sec:results-main}
+
+\Cref{tab:main} reports canonical-split detection at both disclosure levels. The pattern to interrogate is not the leaderboard but three comparisons: rules versus learned shallow models (does the auditor's prior already suffice?); sequence models versus graph detectors at matched input (does structure add anything over order?); and $D_0$ versus $D_1$ (what does text buy?). [TBD---headline numbers: best $D_0$ AUPRC overall and per family; the $D_1$ increment; whether the supervised upper bound closes the gap to the reference detector.]
+
+\begin{table}[tb]
+  \centering
+  \caption{Canonical-split detection (AUPRC / AUROC, mean $\pm$ std over five seeds).}
+  \label{tab:main}
+  \begin{small}
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Detector} & \multicolumn{2}{c}{\textbf{$D_0$ (structure-only)}} & \multicolumn{2}{c}{\textbf{$D_1$ (structure+text)}} \\
+     & AUPRC & AUROC & AUPRC & AUROC \\
+    \midrule
+    Rules & [TBD] & [TBD] & --- & --- \\
+    Graph features + iForest & [TBD] & [TBD] & --- & --- \\
+    $n$-gram & [TBD] & [TBD] & [TBD] & [TBD] \\
+    Trajectory transformer & [TBD] & [TBD] & [TBD] & [TBD] \\
+    LLM judge & --- & --- & [TBD] & [TBD] \\
+    DOMINANT (pooled) & [TBD] & [TBD] & [TBD] & [TBD] \\
+    CoLA (pooled) & [TBD] & [TBD] & [TBD] & [TBD] \\
+    AnomalyGFM (zero-shot) & [TBD] & [TBD] & [TBD] & [TBD] \\
+    OWLEYE (zero-shot) & [TBD] & [TBD] & [TBD] & [TBD] \\
+    GLASS & [TBD] & [TBD] & [TBD] & [TBD] \\
+    HetGNN upper bound & [TBD] & [TBD] & [TBD] & [TBD] \\
+    Reference detector & [TBD] & [TBD] & [TBD] & [TBD] \\
+    \bottomrule
+  \end{tabular}
+  \end{small}
+\end{table}
+
+\subsection{Generalization: LOAO and Transfer}
+\label{sec:results-loao}
+
+\Cref{tab:loao} reports leave-one-attack-family-out generalization and cross-environment transfer. The diagnostic quantity is the LOAO drop: a detector whose advantage evaporates on its held-out family has memorized a threat rather than learned a structural property of compromise. The transfer column asks the deployment question---does a detector trained on replayed environments retain its advantage when the tool catalog changes? [TBD---LOAO drop per detector; which family is hardest held-out; transfer retention fraction.]
+
+\begin{table}[tb]
+  \centering
+  \caption{LOAO generalization and cross-environment transfer (AUPRC).}
+  \label{tab:loao}
+  \begin{small}
+  \begin{tabular}{lcccc|c}
+    \toprule
+    \textbf{Detector} & \textbf{hold A1} & \textbf{hold A2} & \textbf{hold A3} & \textbf{mean drop} & \textbf{transfer} \\
+    \midrule
+    Rules & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
+    Graph features + iForest & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
+    Trajectory transformer & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
+    GLASS & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
+    HetGNN upper bound & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
+    Reference detector & [TBD] & [TBD] & [TBD] & [TBD] & [TBD] \\
+    \bottomrule
+  \end{tabular}
+  \end{small}
+\end{table}
+
+\subsection{Mimicry Robustness}
+\label{sec:results-mimicry}
+
+\Cref{tab:mimicry} reports degradation under the three mimicry variants of \cref{sec:bench-mimicry}. Because M2 degrades surface statistics while M3 preserves them, the M2--M3 contrast attributes failures to surface features versus structure. If structural detectors degrade as sharply as shallow ones, the provenance bet fails on agent trajectories in its naive form, and the field's assumption that structure is the robust signal needs revision---either outcome is a finding the benchmark is designed to expose. [TBD---degradation per variant; the M2--M3 contrast; whether any detector retains advantage under M1 splicing.]
+
+\begin{table}[tb]
+  \centering
+  \caption{Mimicry robustness on A1 and A3 (AUPRC, relative to canonical split).}
+  \label{tab:mimicry}
+  \begin{small}
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Detector} & \textbf{M1 splicing} & \textbf{M2 padding} & \textbf{M3 camouflage} \\
+    \midrule
+    Graph features + iForest & [TBD] & [TBD] & [TBD] \\
+    Trajectory transformer & [TBD] & [TBD] & [TBD] \\
+    GLASS & [TBD] & [TBD] & [TBD] \\
+    Reference detector & [TBD] & [TBD] & [TBD] \\
+    \bottomrule
+  \end{tabular}
+  \end{small}
+\end{table}
+
+\subsection{Localization and Audit Economics}
+\label{sec:results-cost}
+
+Localization turns a detector into a workflow: an auditor triages flagged traces, and step-level scores direct the first read. We score node-level AUC against AgentDrift's step labels on A1~\cite{pinjari2026agentdrift}. Audit economics, per \cref{sec:bench-metrics}, reports GPU-seconds per trace and API cost where applicable; the LLM judge is expected to dominate cost by orders of magnitude, which matters because the audit queue in deployment is long and mostly benign. [TBD---localization AUC; cost table; cost--accuracy frontier statement.]
+
+\subsection{Analysis}
+\label{sec:results-analysis}
+
+Three analyses complete the map. First, \emph{family structure}: we visualize the compiled graphs of top-ranked false positives and false negatives, reporting which schema relations drive errors---our working hypothesis, to be confirmed or refuted by the [TBD] experiments, is that \texttt{flows} paths into \texttt{sink} nodes carry the A1 signal while A3 lives in missing-authorization structure. Second, \emph{disclosure policy}: the $D_0$--$D_1$ gap quantifies how much audit quality an operator forfeits by declining to log prompt text, an operational trade-off no prior agent-safety benchmark measures. Third, \emph{sensitivity}: we vary benign-trajectory contamination, family mixing ratios, and embedding choices, reporting stability of the detector ranking under perturbation so that the benchmark's conclusions do not hinge on one configuration.
