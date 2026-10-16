@@ -1,0 +1,21 @@
+device=cuda
+loaded 32682 graphs
+embedding 75639 unique node texts with sentence-transformers/all-mpnet-base-v2
+embedding hit-rate: 416855/416855
+embedding store: 75639 unique texts
+[ea8text/dominant/s0] subsampled train union: 2000 graphs (536 pos, 1464 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8text/dominant/s0] test AUROC=0.641 AUPRC=0.355
+[ea8text/dominant/s1] subsampled train union: 2000 graphs (542 pos, 1458 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8text/dominant/s1] test AUROC=0.646 AUPRC=0.357
+[ea8text/dominant/s2] subsampled train union: 2000 graphs (514 pos, 1486 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8text/dominant/s2] test AUROC=0.622 AUPRC=0.433
+{
+ "dominant__tg": {
+  "AUROC_mean": 0.6364387229298321,
+  "AUPRC_mean": 0.3819947490215651,
+  "AUROC_std": 0.01043174401225407,
+  "AUPRC_std": 0.036231821260738456,
+  "n_runs": 3
+ }
+}
+EXIT=0

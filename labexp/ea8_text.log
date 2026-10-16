@@ -1,0 +1,31 @@
+device=cuda
+loaded 32682 graphs
+embedding 75639 unique node texts with sentence-transformers/all-mpnet-base-v2
+embedding hit-rate: 416855/416855
+embedding store: 75639 unique texts
+[ea8text/dominant/s0] subsampled train union: 2000 graphs (536 pos, 1464 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8text/dominant/s0] test AUROC=0.641 AUPRC=0.355
+[ea8text/cola/s0] test AUROC=0.448 AUPRC=0.207
+[ea8text/dominant/s1] subsampled train union: 2000 graphs (542 pos, 1458 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8text/dominant/s1] fit failed: CUDA out of memory. Tried to allocate 2.66 GiB. GPU 0 has a total capacity of 23.52 GiB of which 663.06 MiB is free. Process 3271 has 3.71 GiB memory in use. Including non-PyTorch memory, this process has 16.40 GiB memory in use. Process 3664 has 2.74 GiB memory in use. Of the allocated memory 13.74 GiB is allocated by PyTorch, and 2.20 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+[ea8text/cola/s1] test AUROC=0.531 AUPRC=0.293
+[ea8text/dominant/s2] subsampled train union: 2000 graphs (514 pos, 1486 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8text/dominant/s2] test AUROC=0.622 AUPRC=0.433
+[ea8text/cola/s2] test AUROC=0.485 AUPRC=0.277
+{
+ "dominant__tg": {
+  "AUROC_mean": 0.6314683428799108,
+  "AUPRC_mean": 0.39432031675865875,
+  "AUROC_std": 0.00945683331167968,
+  "AUPRC_std": 0.03897447730658721,
+  "n_runs": 2
+ },
+ "cola__tg": {
+  "AUROC_mean": 0.48809342813572093,
+  "AUPRC_mean": 0.2590032643650519,
+  "AUROC_std": 0.033905808486483564,
+  "AUPRC_std": 0.03709331894289492,
+  "n_runs": 3
+ }
+}
+EA8TEXT_EXIT=0

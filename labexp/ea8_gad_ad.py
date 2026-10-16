@@ -73,6 +73,7 @@ def run_one(name, graphs, ids, seed, exp, emb_store, dev, fit_subsample=0, infer
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", default="dominant,cola")
+    ap.add_argument("--splits", default="tg")
     ap.add_argument("--seeds", type=int, default=3)
     ap.add_argument("--emb", type=int, default=0)
     ap.add_argument("--exp", default="ea8")
@@ -96,13 +97,24 @@ def main():
         print(f"embedding store: {len(emb_store)} unique texts", flush=True)
 
     results = collections.defaultdict(list)
-    for seed in range(args.seeds):
-        CA.task_grouped_split(graphs, seed=seed)
-        for name in args.models.split(","):
-            m = run_one(name, graphs, ids, seed, args.exp, emb_store, dev,
-                        fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk)
-            if m:
-                results[f"{name}__tg"].append(m)
+    for split_name in args.splits.split(","):
+        if split_name == "tg":
+            for seed in range(args.seeds):
+                CA.task_grouped_split(graphs, seed=seed)
+                for name in args.models.split(","):
+                    m = run_one(name, graphs, ids, seed, args.exp, emb_store, dev,
+                                fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk)
+                    if m:
+                        results[f"{name}__tg"].append(m)
+        else:
+            suite = split_name.replace("liso_", "")
+            CA.liso_split(graphs, suite)
+            for name in args.models.split(","):
+                for seed in range(args.seeds):
+                    m = run_one(name, graphs, ids, seed, args.exp, emb_store, dev,
+                                fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk)
+                    if m:
+                        results[f"{name}__{split_name}"].append(m)
 
     summary = {k: {"AUROC_mean": float(np.nanmean([x["AUROC"] for x in v])),
                    "AUPRC_mean": float(np.nanmean([x["AUPRC"] for x in v])),

@@ -3,3 +3,87 @@ loaded 32682 graphs
 embedding 75639 unique node texts with sentence-transformers/all-mpnet-base-v2
 embedding hit-rate: 416855/416855
 embedding store: 75639 unique texts
+built 32682 graphs, in_dim=772
+[ea6/rgcn_text__liso_banking/s0] test AUROC=0.715 AUPRC=0.608
+[ea6/rgcn_text__liso_banking/s1] test AUROC=0.726 AUPRC=0.599
+[ea6/rgcn_text__liso_banking/s2] test AUROC=0.650 AUPRC=0.437
+[ea6/gat_text__liso_banking/s0] test AUROC=0.547 AUPRC=0.369
+[ea6/gat_text__liso_banking/s1] test AUROC=0.539 AUPRC=0.364
+[ea6/gat_text__liso_banking/s2] test AUROC=0.553 AUPRC=0.372
+[ea6/rgcn_text__liso_slack/s0] test AUROC=0.540 AUPRC=0.490
+[ea6/rgcn_text__liso_slack/s1] test AUROC=0.620 AUPRC=0.560
+[ea6/rgcn_text__liso_slack/s2] test AUROC=0.559 AUPRC=0.518
+[ea6/gat_text__liso_slack/s0] test AUROC=0.569 AUPRC=0.507
+[ea6/gat_text__liso_slack/s1] test AUROC=0.545 AUPRC=0.490
+[ea6/gat_text__liso_slack/s2] test AUROC=0.546 AUPRC=0.488
+[ea6/rgcn_text__liso_travel/s0] test AUROC=0.624 AUPRC=0.280
+[ea6/rgcn_text__liso_travel/s1] test AUROC=0.569 AUPRC=0.245
+[ea6/rgcn_text__liso_travel/s2] test AUROC=0.567 AUPRC=0.242
+[ea6/gat_text__liso_travel/s0] test AUROC=0.613 AUPRC=0.262
+[ea6/gat_text__liso_travel/s1] test AUROC=0.595 AUPRC=0.249
+[ea6/gat_text__liso_travel/s2] test AUROC=0.616 AUPRC=0.275
+[ea6/rgcn_text__liso_workspace/s0] test AUROC=0.731 AUPRC=0.408
+[ea6/rgcn_text__liso_workspace/s1] test AUROC=0.768 AUPRC=0.459
+[ea6/rgcn_text__liso_workspace/s2] test AUROC=0.779 AUPRC=0.456
+[ea6/gat_text__liso_workspace/s0] test AUROC=0.637 AUPRC=0.228
+[ea6/gat_text__liso_workspace/s1] test AUROC=0.708 AUPRC=0.351
+[ea6/gat_text__liso_workspace/s2] test AUROC=0.647 AUPRC=0.232
+{
+ "rgcn_text__liso_banking": {
+  "AUROC_mean": 0.6970381480405007,
+  "AUPRC_mean": 0.5479789381435358,
+  "AUROC_std": 0.03377892074763227,
+  "AUPRC_std": 0.07869148856961486,
+  "n_runs": 3
+ },
+ "gat_text__liso_banking": {
+  "AUROC_mean": 0.5459941724110827,
+  "AUPRC_mean": 0.3684168855991257,
+  "AUROC_std": 0.005771555743081783,
+  "AUPRC_std": 0.003431859501122339,
+  "n_runs": 3
+ },
+ "rgcn_text__liso_slack": {
+  "AUROC_mean": 0.5732102068922494,
+  "AUPRC_mean": 0.5225144597598853,
+  "AUROC_std": 0.034225159521583726,
+  "AUPRC_std": 0.02884263648447129,
+  "n_runs": 3
+ },
+ "gat_text__liso_slack": {
+  "AUROC_mean": 0.5533341970838821,
+  "AUPRC_mean": 0.494739244470816,
+  "AUROC_std": 0.010950008633672478,
+  "AUPRC_std": 0.008606264907377158,
+  "n_runs": 3
+ },
+ "rgcn_text__liso_travel": {
+  "AUROC_mean": 0.5867930636641948,
+  "AUPRC_mean": 0.2558553365019567,
+  "AUROC_std": 0.02658246219458221,
+  "AUPRC_std": 0.017347728366437373,
+  "n_runs": 3
+ },
+ "gat_text__liso_travel": {
+  "AUROC_mean": 0.6082289138563759,
+  "AUPRC_mean": 0.2618907529000755,
+  "AUROC_std": 0.009082737337581585,
+  "AUPRC_std": 0.01076137692797545,
+  "n_runs": 3
+ },
+ "rgcn_text__liso_workspace": {
+  "AUROC_mean": 0.7591844622153735,
+  "AUPRC_mean": 0.4409875905849354,
+  "AUROC_std": 0.020573433765470214,
+  "AUPRC_std": 0.023442344807445795,
+  "n_runs": 3
+ },
+ "gat_text__liso_workspace": {
+  "AUROC_mean": 0.6642861299625652,
+  "AUPRC_mean": 0.2699989084176289,
+  "AUROC_std": 0.031301609393046194,
+  "AUPRC_std": 0.05709557259303962,
+  "n_runs": 3
+ }
+}
+EA6LISO_EXIT=0

@@ -1,0 +1,29 @@
+device=cuda
+loaded 32682 graphs
+embedding 75639 unique node texts with sentence-transformers/all-mpnet-base-v2
+embedding hit-rate: 416855/416855
+embedding store: 75639 unique texts
+built 32682 graphs, in_dim=772
+[ea6/rgcn_text__tg/s0] test AUROC=0.940 AUPRC=0.871
+[ea6/gat_text__tg/s0] test AUROC=0.763 AUPRC=0.594
+[ea6/rgcn_text__tg/s1] test AUROC=0.911 AUPRC=0.619
+[ea6/gat_text__tg/s1] test AUROC=0.827 AUPRC=0.491
+[ea6/rgcn_text__tg/s2] test AUROC=0.891 AUPRC=0.792
+[ea6/gat_text__tg/s2] test AUROC=0.869 AUPRC=0.774
+{
+ "rgcn_text__tg": {
+  "AUROC_mean": 0.9139308785336923,
+  "AUPRC_mean": 0.7608917347161973,
+  "AUROC_std": 0.019825175758945168,
+  "AUPRC_std": 0.10552201431354538,
+  "n_runs": 3
+ },
+ "gat_text__tg": {
+  "AUROC_mean": 0.8197755814389129,
+  "AUPRC_mean": 0.6197466912768619,
+  "AUROC_std": 0.04357746996154765,
+  "AUPRC_std": 0.11655892992826168,
+  "n_runs": 3
+ }
+}
+EA6TG_EXIT=0

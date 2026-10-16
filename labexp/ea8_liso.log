@@ -1,0 +1,97 @@
+device=cuda
+loaded 32682 graphs
+[ea8liso/dominant/s0] subsampled train union: 2000 graphs (465 pos, 1535 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s0] test AUROC=0.665 AUPRC=0.514
+[ea8liso/dominant/s1] subsampled train union: 2000 graphs (465 pos, 1535 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s1] test AUROC=0.617 AUPRC=0.414
+[ea8liso/dominant/s2] subsampled train union: 2000 graphs (465 pos, 1535 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s2] test AUROC=0.665 AUPRC=0.495
+[ea8liso/cola/s0] test AUROC=0.607 AUPRC=0.392
+[ea8liso/cola/s1] test AUROC=0.536 AUPRC=0.356
+[ea8liso/cola/s2] test AUROC=0.573 AUPRC=0.368
+[ea8liso/dominant/s0] subsampled train union: 2000 graphs (421 pos, 1579 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s0] test AUROC=0.680 AUPRC=0.611
+[ea8liso/dominant/s1] subsampled train union: 2000 graphs (421 pos, 1579 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s1] test AUROC=0.639 AUPRC=0.572
+[ea8liso/dominant/s2] subsampled train union: 2000 graphs (421 pos, 1579 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s2] test AUROC=0.687 AUPRC=0.615
+[ea8liso/cola/s0] test AUROC=0.612 AUPRC=0.552
+[ea8liso/cola/s1] test AUROC=0.618 AUPRC=0.556
+[ea8liso/cola/s2] test AUROC=0.651 AUPRC=0.583
+[ea8liso/dominant/s0] subsampled train union: 2000 graphs (536 pos, 1464 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s0] test AUROC=0.513 AUPRC=0.204
+[ea8liso/dominant/s1] subsampled train union: 2000 graphs (536 pos, 1464 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s1] test AUROC=0.497 AUPRC=0.198
+[ea8liso/dominant/s2] subsampled train union: 2000 graphs (536 pos, 1464 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s2] test AUROC=0.510 AUPRC=0.199
+[ea8liso/cola/s0] test AUROC=0.527 AUPRC=0.215
+[ea8liso/cola/s1] test AUROC=0.515 AUPRC=0.202
+[ea8liso/cola/s2] test AUROC=0.526 AUPRC=0.213
+[ea8liso/dominant/s0] subsampled train union: 2000 graphs (654 pos, 1346 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s0] test AUROC=0.687 AUPRC=0.289
+[ea8liso/dominant/s1] subsampled train union: 2000 graphs (654 pos, 1346 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s1] test AUROC=0.677 AUPRC=0.263
+[ea8liso/dominant/s2] subsampled train union: 2000 graphs (654 pos, 1346 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8liso/dominant/s2] test AUROC=0.688 AUPRC=0.287
+[ea8liso/cola/s0] test AUROC=0.555 AUPRC=0.193
+[ea8liso/cola/s1] test AUROC=0.566 AUPRC=0.190
+[ea8liso/cola/s2] test AUROC=0.593 AUPRC=0.198
+{
+ "dominant__liso_banking": {
+  "AUROC_mean": 0.6486959398815104,
+  "AUPRC_mean": 0.4744436158438729,
+  "AUROC_std": 0.022557087647997617,
+  "AUPRC_std": 0.043521279648228405,
+  "n_runs": 3
+ },
+ "cola__liso_banking": {
+  "AUROC_mean": 0.571837829241408,
+  "AUPRC_mean": 0.3719710837224892,
+  "AUROC_std": 0.029149322771960223,
+  "AUPRC_std": 0.015114523396655973,
+  "n_runs": 3
+ },
+ "dominant__liso_slack": {
+  "AUROC_mean": 0.668878527881148,
+  "AUPRC_mean": 0.5993279266149228,
+  "AUROC_std": 0.021137109573229333,
+  "AUPRC_std": 0.01908744484174065,
+  "n_runs": 3
+ },
+ "cola__liso_slack": {
+  "AUROC_mean": 0.6267825352038332,
+  "AUPRC_mean": 0.5634044571961613,
+  "AUROC_std": 0.017115323793893182,
+  "AUPRC_std": 0.01396769060617452,
+  "n_runs": 3
+ },
+ "dominant__liso_travel": {
+  "AUROC_mean": 0.5065382610683681,
+  "AUPRC_mean": 0.20026202874544552,
+  "AUROC_std": 0.006983029693894884,
+  "AUPRC_std": 0.002579522677044107,
+  "n_runs": 3
+ },
+ "cola__liso_travel": {
+  "AUROC_mean": 0.5226709465313855,
+  "AUPRC_mean": 0.21003040264250186,
+  "AUROC_std": 0.005657360947900673,
+  "AUPRC_std": 0.0054866459982685425,
+  "n_runs": 3
+ },
+ "dominant__liso_workspace": {
+  "AUROC_mean": 0.6841541976527926,
+  "AUPRC_mean": 0.2793551270638363,
+  "AUROC_std": 0.005024548891968088,
+  "AUPRC_std": 0.011874502781355854,
+  "n_runs": 3
+ },
+ "cola__liso_workspace": {
+  "AUROC_mean": 0.5712796440415869,
+  "AUPRC_mean": 0.1935478241503843,
+  "AUROC_std": 0.016057941861621277,
+  "AUPRC_std": 0.0029920212544570423,
+  "n_runs": 3
+ }
+}
+EXIT=0
