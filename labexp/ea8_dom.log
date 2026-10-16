@@ -1,0 +1,18 @@
+device=cuda
+loaded 32682 graphs
+[ea8/dominant/s0] subsampled train union: 2000 graphs (536 pos, 1464 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8/dominant/s0] test AUROC=0.661 AUPRC=0.344
+[ea8/dominant/s1] subsampled train union: 2000 graphs (542 pos, 1458 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8/dominant/s1] test AUROC=0.625 AUPRC=0.310
+[ea8/dominant/s2] subsampled train union: 2000 graphs (514 pos, 1486 neg); DOMINANT is unsupervised (y unused), stratified trim only bounds the dense n^2 reconstruction
+[ea8/dominant/s2] test AUROC=0.620 AUPRC=0.368
+{
+ "dominant__tg": {
+  "AUROC_mean": 0.6351457126227295,
+  "AUPRC_mean": 0.3405264083854654,
+  "AUROC_std": 0.018282678672046318,
+  "AUPRC_std": 0.023724759293060078,
+  "n_runs": 3
+ }
+}
+EA8DOM_EXIT=0

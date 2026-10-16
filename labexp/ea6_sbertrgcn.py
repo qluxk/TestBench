@@ -124,7 +124,7 @@ def run_one(graphs, ids, seed, exp, model, split_name, data, dev):
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
     m = compute_metrics([graphs[s]["y"] for s in te], [scores[s] for s in te])
-    CA.save_rows(exp, model, seed, graphs, scores)
+    CA.save_rows(exp, f"{model}__{split_name}", seed, graphs, scores)
     print(f"[{exp}/{model}__{split_name}/s{seed}] test AUROC={m['AUROC']:.3f} AUPRC={m['AUPRC']:.3f}", flush=True)
     return m
 
@@ -152,11 +152,25 @@ def main():
     print(f"built {len(data)} graphs, in_dim={data[0].x.size(1)}", flush=True)
 
     results = collections.defaultdict(list)
-    for seed in range(args.seeds):
-        CA.task_grouped_split(graphs, seed=seed)
-        for model in args.models.split(","):
-            m = run_one(graphs, ids, seed, args.exp, model, "tg", data, dev)
-            results[f"{model}__tg"].append(m)
+    for split_name in args.splits.split(","):
+        if split_name == "tg":
+            for seed in range(args.seeds):
+                CA.task_grouped_split(graphs, seed=seed)
+                for model in args.models.split(","):
+                    m = run_one(graphs, ids, seed, args.exp, model, "tg", data, dev)
+                    results[f"{model}__tg"].append(m)
+        else:
+            suite = split_name.replace("liso_", "")
+            CA.liso_split(graphs, suite)
+            tr0 = [s for s in ids if graphs[s]["fold"] == "train"]
+            rng = __import__("random").Random(f"liso-{suite}")
+            va_set = set(rng.sample(tr0, max(1, len(tr0) // 10)))
+            for s in va_set:
+                graphs[s]["fold"] = "validation"
+            for model in args.models.split(","):
+                for seed in range(args.seeds):
+                    m = run_one(graphs, ids, seed, args.exp, model, split_name, data, dev)
+                    results[f"{model}__{split_name}"].append(m)
 
     summary = {k: {"AUROC_mean": float(np.nanmean([x["AUROC"] for x in v])),
                    "AUPRC_mean": float(np.nanmean([x["AUPRC"] for x in v])),

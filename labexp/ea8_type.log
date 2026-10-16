@@ -1,0 +1,21 @@
+device=cuda
+loaded 32682 graphs
+[ea8/dominant/s0] subsampled train union: 7755 graphs (536 pos, 7219 neg)
+[ea8/dominant/s0] fit failed: CUDA out of memory. Tried to allocate 43.61 GiB. GPU 0 has a total capacity of 23.52 GiB of which 19.77 GiB is free. Process 1731 has 3.26 GiB memory in use. Including non-PyTorch memory, this process has 478.00 MiB memory in use. Of the allocated memory 10.46 MiB is allocated by PyTorch, and 19.54 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+[ea8/cola/s0] test AUROC=0.582 AUPRC=0.268
+[ea8/dominant/s1] subsampled train union: 7779 graphs (542 pos, 7237 neg)
+[ea8/dominant/s1] fit failed: CUDA out of memory. Tried to allocate 43.20 GiB. GPU 0 has a total capacity of 23.52 GiB of which 19.68 GiB is free. Process 1731 has 3.26 GiB memory in use. Including non-PyTorch memory, this process has 572.00 MiB memory in use. Of the allocated memory 26.66 MiB is allocated by PyTorch, and 79.34 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+[ea8/cola/s1] test AUROC=0.581 AUPRC=0.288
+[ea8/dominant/s2] subsampled train union: 7520 graphs (514 pos, 7006 neg)
+[ea8/dominant/s2] fit failed: CUDA out of memory. Tried to allocate 37.17 GiB. GPU 0 has a total capacity of 23.52 GiB of which 21.97 GiB is free. Process 1731 has 1002.00 MiB memory in use. Including non-PyTorch memory, this process has 572.00 MiB memory in use. Of the allocated memory 25.86 MiB is allocated by PyTorch, and 80.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+[ea8/cola/s2] test AUROC=0.552 AUPRC=0.321
+{
+ "cola__tg": {
+  "AUROC_mean": 0.5716453618055196,
+  "AUPRC_mean": 0.29225863283573345,
+  "AUROC_std": 0.013882240913367478,
+  "AUPRC_std": 0.02210607384505168,
+  "n_runs": 3
+ }
+}
+EA8_EXIT=0

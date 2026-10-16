@@ -1,0 +1,5 @@
+device=cuda
+loaded 32682 graphs
+embedding 75639 unique node texts with sentence-transformers/all-mpnet-base-v2
+embedding hit-rate: 416855/416855
+embedding store: 75639 unique texts
