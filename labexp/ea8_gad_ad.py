@@ -26,7 +26,7 @@ def pool(scores_np, batch_vec):
     return out_mean, out_max
 
 
-def run_one(name, graphs, ids, seed, exp, emb_store, dev, fit_subsample=0, infer_chunk=512):
+def run_one(name, graphs, ids, seed, exp, emb_store, dev, fit_subsample=0, infer_chunk=512, split_name="tg"):
     from pygod.detector import DOMINANT, CoLA
     data = build_data(graphs, emb_store, text_emb=emb_store is not None, no_edges=False)
     by_sid = {d.sid: d for d in data}
@@ -63,8 +63,8 @@ def run_one(name, graphs, ids, seed, exp, emb_store, dev, fit_subsample=0, infer
         for j, sid in enumerate(sids):
             score_map[sid] = float(max(mean_s[j], max_s[j]))
     m = compute_metrics([graphs[s]["y"] for s in te], [score_map[s] for s in te])
-    CA.save_rows(exp, name, seed, graphs, score_map)
-    print(f"[{exp}/{name}/s{seed}] test AUROC={m['AUROC']:.3f} AUPRC={m['AUPRC']:.3f}", flush=True)
+    CA.save_rows(exp, f"{name}__{split_name}", seed, graphs, score_map)
+    print(f"[{exp}/{name}__{split_name}/s{seed}] test AUROC={m['AUROC']:.3f} AUPRC={m['AUPRC']:.3f}", flush=True)
     del model, data
     torch.cuda.empty_cache()
     return m
@@ -103,7 +103,7 @@ def main():
                 CA.task_grouped_split(graphs, seed=seed)
                 for name in args.models.split(","):
                     m = run_one(name, graphs, ids, seed, args.exp, emb_store, dev,
-                                fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk)
+                                fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk, split_name="tg")
                     if m:
                         results[f"{name}__tg"].append(m)
         else:
@@ -112,7 +112,7 @@ def main():
             for name in args.models.split(","):
                 for seed in range(args.seeds):
                     m = run_one(name, graphs, ids, seed, args.exp, emb_store, dev,
-                                fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk)
+                                fit_subsample=args.fit_subsample, infer_chunk=args.infer_chunk, split_name=split_name)
                     if m:
                         results[f"{name}__{split_name}"].append(m)
 
