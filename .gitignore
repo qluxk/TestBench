@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+_transfer/
+results_local/
+external/agentdojo/graphs/
+*.tar.gz
+*.pkl
+tokenkey*
+build/
